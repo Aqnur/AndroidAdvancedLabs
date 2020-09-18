@@ -36,9 +36,6 @@ class MainPresenter(
             hasLastInputEquals -> {
                 resetCalculator()
             }
-            else -> {
-                mOperator = Operator.EMPTY
-            }
         }
 
         if (mCurrentOperand.getValue().length < maxLength) {
@@ -86,6 +83,11 @@ class MainPresenter(
         mPreviousOperand.reset()
         mOperator = Operator.EMPTY
         hasLastInputEquals = true
+        updateDisplay()
+    }
+
+    override fun backspace() {
+        mCurrentOperand.deleteDigit()
         updateDisplay()
     }
 

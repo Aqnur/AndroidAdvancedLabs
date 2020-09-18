@@ -32,6 +32,7 @@ class MainActivity : AppCompatActivity(), ContractInterface.View {
     private lateinit var equal: Button
     private lateinit var input: TextView
     private lateinit var sign: TextView
+    private lateinit var backspace: Button
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -61,6 +62,7 @@ class MainActivity : AppCompatActivity(), ContractInterface.View {
         clear = findViewById(R.id.clear)
         input = findViewById(R.id.input)
         sign = findViewById(R.id.sign)
+        backspace = findViewById(R.id.delete)
     }
 
     private fun onClickListener() {
@@ -83,6 +85,8 @@ class MainActivity : AppCompatActivity(), ContractInterface.View {
         clear.setOnClickListener { mPresenter.clearCalculation() }
 
         equal.setOnClickListener { mPresenter.performCalculation() }
+
+        backspace.setOnClickListener { mPresenter.backspace() }
     }
 
     override fun displayOperand(calculation: String) {

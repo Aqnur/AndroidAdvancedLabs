@@ -14,5 +14,6 @@ interface ContractInterface {
         fun appendValue(value: String)
         fun appendOperator(operator: String)
         fun performCalculation()
+        fun backspace()
     }
 }

@@ -21,6 +21,18 @@ class Operand {
         }
     }
 
+    fun deleteDigit() {
+        mValue = if (mValue.length == 1) {
+            emptyValue
+        } else {
+            if (mValue[mValue.length - 1] == '.') {
+                mValue.substring(0, mValue.length - 2)
+            } else {
+                mValue.substring(0, mValue.length - 1)
+            }
+        }
+    }
+
     fun reset() {
         mValue = emptyValue
     }
