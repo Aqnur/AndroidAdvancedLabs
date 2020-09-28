@@ -1,24 +1,25 @@
 package com.example.applicationmvvm.view
 
-import android.content.Context
 import android.view.LayoutInflater
-import android.view.View
 import android.view.ViewGroup
-import android.widget.ImageView
-import android.widget.TextView
+import androidx.databinding.ViewDataBinding
 import androidx.recyclerview.widget.RecyclerView
-import com.bumptech.glide.Glide
-import com.example.applicationmvvm.R
+import com.example.applicationmvvm.BR
+import com.example.applicationmvvm.databinding.ListItemBinding
 import com.example.applicationmvvm.model.json.Pokemon
-import com.example.applicationmvvm.viewModel.PokemonViewModel
+import com.example.applicationmvvm.viewModel.PokemonListViewModel
+import com.squareup.picasso.Picasso
+import kotlinx.android.synthetic.main.list_item.view.*
 
-class PokemonListAdapter(val context: Context) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
+class PokemonListAdapter(private val pokemonListViewModel: PokemonListViewModel) :
+    RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
-    var pokemonList: List<Pokemon> = emptyList()
+    private var pokemonList: List<Pokemon> = emptyList()
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
-        val inflater = LayoutInflater.from(parent.context).inflate(R.layout.list_item, parent, false)
-        return PokemonListViewHolder(inflater)
+        val inflater = LayoutInflater.from(parent.context)
+        val dataBinding = ListItemBinding.inflate(inflater, parent, false)
+        return PokemonListViewHolder(dataBinding, pokemonListViewModel)
     }
 
     override fun getItemCount(): Int = pokemonList.size
@@ -29,26 +30,23 @@ class PokemonListAdapter(val context: Context) : RecyclerView.Adapter<RecyclerVi
         }
     }
 
-    fun updateRepoList(repoList: List<Pokemon>) {
-        this.pokemonList = repoList
+    fun updatePokemonList(pokemonList: List<Pokemon>) {
+        this.pokemonList = pokemonList
         notifyDataSetChanged()
     }
 
-    fun clearAll() {
-        (pokemonList as? ArrayList<Pokemon>)?.clear()
-        notifyDataSetChanged()
-    }
+    inner class PokemonListViewHolder(
+        private val dataBinding: ViewDataBinding,
+        pokemonListViewModel: PokemonListViewModel
+    ) : RecyclerView.ViewHolder(dataBinding.root) {
 
-    inner class PokemonListViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
-        private val pokemonPicture: ImageView = itemView.findViewById(R.id.pokemonPicture)
-        private val pokemonName: TextView = itemView.findViewById(R.id.pokemonName)
+        private val pokemonPicture = itemView.pokemonPicture
 
-        fun bind(pokemon: Pokemon) {
-            Glide.with(itemView.context)
-                .load(pokemon.img)
-                .into(pokemonPicture)
+        fun bind(itemData: Pokemon) {
+            dataBinding.setVariable(BR.viewmodel, itemData)
+            dataBinding.executePendingBindings()
 
-            pokemonName.text = pokemon.name
+            Picasso.get().load(itemData.img).into(pokemonPicture);
         }
     }
 }

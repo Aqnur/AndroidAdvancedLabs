@@ -7,5 +7,5 @@ import retrofit2.http.GET
 
 interface PokemonApi {
     @GET("Biuni/PokemonGO-Pokedex/master/pokedex.json")
-    fun getPokemonList() : Call<List<Pokemon>>
+    fun getPokemonList() : Call<PokemonResponse>
 }

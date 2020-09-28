@@ -31,5 +31,5 @@ data class Next_evolution (
 data class PokemonResponse(
     val total_count: Int,
     val incomplete_results: Boolean,
-    @SerializedName("pokemon") val items: List<Pokemon>
+    val items: List<Pokemon>
 )

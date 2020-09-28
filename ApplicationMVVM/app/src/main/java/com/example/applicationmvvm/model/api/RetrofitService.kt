@@ -1,12 +1,11 @@
 package com.example.applicationmvvm.model.api
 
+import com.example.applicationmvvm.util.Const.Companion.BASE_URL
 import okhttp3.OkHttpClient
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 
 object RetrofitService {
-    const val BASE_URL = "https://raw.githubusercontent.com/"
-
     private val client = OkHttpClient.Builder().build()
 
     private val retrofit = Retrofit.Builder()

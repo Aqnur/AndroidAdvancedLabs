@@ -8,27 +8,31 @@ import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 
-interface PokemonRepository {
-    fun getPokemonList(onResult: (isSuccess: Boolean, response: List<Pokemon>?) -> Unit)
-}
+class PokemonRepository {
 
-class PokemonRepositoryImpl(private val retrofitService: RetrofitService) : PokemonRepository {
+    // GET repo list
+    fun getRepoList(onResult: (isSuccess: Boolean, response: PokemonResponse?) -> Unit) {
 
-    override fun getPokemonList(onResult: (isSuccess: Boolean, response: List<Pokemon>?) -> Unit) {
-
-        retrofitService.getPokemonsApi(PokemonApi::class.java).getPokemonList().enqueue(object : Callback<List<Pokemon>> {
-            override fun onResponse(call: Call<List<Pokemon>>?, response: Response<List<Pokemon>>?) {
+        RetrofitService.getPokemonsApi(PokemonApi::class.java).getPokemonList().enqueue(object : Callback<PokemonResponse> {
+            override fun onResponse(call: Call<PokemonResponse>?, response: Response<PokemonResponse>?) {
                 if (response != null && response.isSuccessful)
                     onResult(true, response.body()!!)
                 else
                     onResult(false, null)
             }
 
-            override fun onFailure(call: Call<List<Pokemon>>?, t: Throwable?) {
+            override fun onFailure(call: Call<PokemonResponse>?, t: Throwable?) {
                 onResult(false, null)
             }
 
         })
     }
 
+    companion object {
+        private var INSTANCE: PokemonRepository? = null
+        fun getInstance() = INSTANCE
+            ?: PokemonRepository().also {
+                INSTANCE = it
+            }
+    }
 }
