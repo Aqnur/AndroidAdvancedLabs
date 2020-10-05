@@ -1,5 +1,6 @@
 package com.example.applicationmvvm.model.api
 
+import android.content.SharedPreferences
 import android.util.Log
 import com.example.applicationmvvm.util.Const.Companion.BASE_URL
 import com.example.applicationmvvm.util.Const.Companion.DEBUG

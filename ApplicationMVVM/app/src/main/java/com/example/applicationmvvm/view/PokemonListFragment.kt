@@ -6,17 +6,18 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.applicationmvvm.databinding.PokemonsFragmentBinding
 import com.example.applicationmvvm.viewModel.PokemonListViewModel
 import kotlinx.android.synthetic.main.pokemons_fragment.*
+import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class PokemonListFragment : Fragment() {
 
     private lateinit var viewDataBinding: PokemonsFragmentBinding
     private lateinit var adapter: PokemonListAdapter
+    private val pokemonListViewModel: PokemonListViewModel by viewModel()
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -25,10 +26,9 @@ class PokemonListFragment : Fragment() {
     ): View? {
 
         viewDataBinding = PokemonsFragmentBinding.inflate(inflater, container, false).apply {
-            viewmodel =
-                ViewModelProviders.of(this@PokemonListFragment).get(PokemonListViewModel::class.java)
             lifecycleOwner = viewLifecycleOwner
         }
+        viewDataBinding.viewmodel = pokemonListViewModel
         return viewDataBinding.root
     }
 
