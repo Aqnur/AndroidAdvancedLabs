@@ -2,6 +2,7 @@ package com.example.applicationmvvm.view
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.widget.Toast
 import androidx.fragment.app.FragmentManager
 import com.example.applicationmvvm.R
 
@@ -18,4 +19,9 @@ class MainActivity : AppCompatActivity() {
         fragmentManager.beginTransaction().replace(R.id.main_nav_fragment, PokemonListFragment())
             .commit()
     }
+
+    fun longToast(message: String) {
+        Toast.makeText(this, message, Toast.LENGTH_LONG).show()
+    }
+
 }
