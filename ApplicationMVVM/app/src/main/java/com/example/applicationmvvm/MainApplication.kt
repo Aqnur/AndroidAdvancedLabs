@@ -1,10 +1,7 @@
 package com.example.applicationmvvm
 
 import android.app.Application
-import com.example.applicationmvvm.di.networkModule
-import com.example.applicationmvvm.di.repositoryModule
-import com.example.applicationmvvm.di.sharedPrefModule
-import com.example.applicationmvvm.di.viewModelModule
+import com.example.applicationmvvm.di.*
 import org.koin.android.ext.koin.androidContext
 import org.koin.android.ext.koin.androidLogger
 import org.koin.core.context.startKoin
@@ -14,9 +11,14 @@ class MainApplication : Application() {
         super.onCreate()
 
         startKoin {
-            androidLogger()
             androidContext(this@MainApplication)
-            modules(viewModelModule, repositoryModule, networkModule, sharedPrefModule)
+            modules(
+                viewModelModule,
+                useCaseModule,
+                repositoryModule,
+                networkModule,
+                sharedPrefModule
+            )
         }
     }
 }

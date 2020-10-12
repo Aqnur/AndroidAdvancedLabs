@@ -1,29 +1,30 @@
 package com.example.applicationmvvm.di
 
 import android.content.SharedPreferences
-import com.example.applicationmvvm.model.api.PokemonApi
-import com.example.applicationmvvm.model.api.RetrofitService
+import com.example.applicationmvvm.domain.GetPokemonListUseCase
 import com.example.applicationmvvm.model.api.RetrofitService.getPostApi
-import com.example.applicationmvvm.model.repository.PokemonRepository
+import com.example.applicationmvvm.domain.PokemonListRepository
+import com.example.applicationmvvm.model.repository.PokemonListDataStore
 import com.example.applicationmvvm.viewModel.PokemonListViewModel
 import org.koin.android.ext.koin.androidApplication
 import org.koin.androidx.viewmodel.dsl.viewModel
 import org.koin.dsl.module
 
 val viewModelModule = module {
-    viewModel { PokemonListViewModel(pokemonRepository = get()) }
+    viewModel { PokemonListViewModel(getPokemonListUseCase = get()) }
+}
+
+val useCaseModule = module {
+    single { GetPokemonListUseCase(pokemonListRepository = get<PokemonListDataStore>()) }
 }
 
 val repositoryModule = module {
-    single { PokemonRepository(apiService = get()) }
+    single { PokemonListDataStore(apiService = get()) }
 }
 
 val networkModule = module {
     single { getPostApi() }
-//    single { getOkHttpClient(authInterceptor = get()) }
-//    single { getAuthInterceptor(sharedPreferences = get()) }
 }
-
 
 val sharedPrefModule = module {
     single {

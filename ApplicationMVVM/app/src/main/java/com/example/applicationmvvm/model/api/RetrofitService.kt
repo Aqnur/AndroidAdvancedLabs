@@ -6,6 +6,7 @@ import com.example.applicationmvvm.util.Const.Companion.BASE_URL
 import com.example.applicationmvvm.util.Const.Companion.DEBUG
 import com.example.applicationmvvm.util.Const.Companion.REQUEST_TIMEOUT_DURATION
 import com.google.gson.GsonBuilder
+import com.jakewharton.retrofit2.adapter.kotlin.coroutines.CoroutineCallAdapterFactory
 import okhttp3.Interceptor
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
@@ -19,6 +20,7 @@ object RetrofitService {
         val retrofit = Retrofit.Builder()
             .baseUrl(BASE_URL)
             .addConverterFactory(GsonConverterFactory.create())
+            .addCallAdapterFactory(CoroutineCallAdapterFactory())
             .client(getOkHttp())
             .build()
         return retrofit.create(PokemonApi::class.java)

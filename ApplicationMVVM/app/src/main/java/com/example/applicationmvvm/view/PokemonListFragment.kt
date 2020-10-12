@@ -41,7 +41,7 @@ class PokemonListFragment : Fragment() {
     }
 
     private fun setObservers() {
-        viewDataBinding.viewmodel?.pokemonListLive?.observe(viewLifecycleOwner, Observer {
+        viewDataBinding.viewmodel?.getPokemons()?.observe(viewLifecycleOwner, Observer {
             adapter.updatePokemonList(it)
         })
 
